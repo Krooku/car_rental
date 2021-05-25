@@ -1,0 +1,162 @@
+.test {
+  background-color: red;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.grid-container {
+  background-color: white;
+  width: 1240px;
+  height: 1754px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1.7fr 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr 0.5fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: "LOGO LOGO COMPANY_NAME COMPANY_NAME COMPANY_NAME COMPANY_NAME COMPANY_CONTACT COMPANY_CONTACT" "RENTAL_CONTRACT_NUMBER RENTAL_CONTRACT_NUMBER RENTAL_CONTRACT_NUMBER RENTAL_CONTRACT_NUMBER RENTAL_CONTRACT_NUMBER ERRAND ERRAND ERRAND" "CLIENT CLIENT DRIVING_LICENCE DRIVING_LICENCE ID_CARD ID_CARD ADDITIONAL_DRIVER ADDITIONAL_DRIVER" "ZIP_CODE ZIP_CODE CITY CITY STREET STREET PHONENUMBER PHONENUMBER" "COST_GUARANTEE_BY_INSURANCE COST_GUARANTEE_BY_INSURANCE COST_GUARANTEE_BY_INSURANCE COST_GUARANTEE_BY_INSURANCE POSSIBLE_CHARGE_CLIENT POSSIBLE_CHARGE_CLIENT POSSIBLE_CHARGE_CLIENT POSSIBLE_CHARGE_CLIENT" ". . . . . . . .";
+}
+
+.LOGO {
+  grid-area: LOGO;
+  background-color: red;
+}
+
+.COMPANY_NAME {
+  grid-area: COMPANY_NAME;
+  background-color: green;
+}
+
+.COMPANY_CONTACT {
+  grid-area: COMPANY_CONTACT;
+  background-color: blueviolet;
+}
+
+.RENTAL_CONTRACT_NUMBER { grid-area: RENTAL_CONTRACT_NUMBER; }
+
+.ERRAND {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "ERRAND_ID" "INSURANCE_NAME";
+  grid-area: ERRAND;
+}
+
+.ERRAND_ID { grid-area: ERRAND_ID; }
+
+.INSURANCE_NAME { grid-area: INSURANCE_NAME; }
+
+.CLIENT {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "ICON" "FULLNAME" "BIRTHDATE" "BIRTHPLACE";
+  grid-area: CLIENT;
+}
+
+.ICON { grid-area: ICON; }
+
+.FULLNAME { grid-area: FULLNAME; }
+
+.BIRTHDATE { grid-area: BIRTHDATE; }
+
+.BIRTHPLACE { grid-area: BIRTHPLACE; }
+
+.DRIVING_LICENCE {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "ICON_DL" "DL_ID" "DL_RELEASE_DATE" "DL_RELEASE_PLACE";
+  grid-area: DRIVING_LICENCE;
+}
+
+.ICON_DL { grid-area: ICON_DL; }
+
+.DL_ID { grid-area: DL_ID; }
+
+.DL_RELEASE_DATE { grid-area: DL_RELEASE_DATE; }
+
+.DL_RELEASE_PLACE { grid-area: DL_RELEASE_PLACE; }
+
+.ID_CARD {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "ICON_ID_CARD" "ID_CARD_NR" "ID_CARD_EXP_DATE" "ID_CARD_RELEASE_DATE";
+  grid-area: ID_CARD;
+}
+
+.ICON_ID_CARD { grid-area: ICON_ID_CARD; }
+
+.ID_CARD_NR { grid-area: ID_CARD_NR; }
+
+.ID_CARD_EXP_DATE { grid-area: ID_CARD_EXP_DATE; }
+
+.ID_CARD_RELEASE_DATE { grid-area: ID_CARD_RELEASE_DATE; }
+
+.ADDITIONAL_DRIVER { grid-area: ADDITIONAL_DRIVER; }
+
+.ZIP_CODE { grid-area: ZIP_CODE; }
+
+.CITY { grid-area: CITY; }
+
+.STREET { grid-area: STREET; }
+
+.PHONENUMBER { grid-area: PHONENUMBER; }
+
+.COST_GUARANTEE_BY_INSURANCE {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: "RENT_DAYS MAX_RENT_DAYS GROUP_CAR" "SUBSTITUTION SUBSTITUTION SUBSTITUTION" "PICKUP PICKUP PICKUP" "CDW_LEFT CDW_LEFT CDW_LEFT" "TW_LEFT TW_LEFT TW_LEFT" "DEPOSIT_COST DEPOSIT_COST DEPOSIT_COST" "NO_KM_LIMIT NO_KM_LIMIT NO_KM_LIMIT" "OTHER OTHER OTHER";
+  grid-area: COST_GUARANTEE_BY_INSURANCE;
+}
+
+.RENT_DAYS { grid-area: RENT_DAYS; }
+
+.MAX_RENT_DAYS { grid-area: MAX_RENT_DAYS; }
+
+.GROUP_CAR { grid-area: GROUP_CAR; }
+
+.SUBSTITUTION { grid-area: SUBSTITUTION; }
+
+.PICKUP { grid-area: PICKUP; }
+
+.CDW_LEFT { grid-area: CDW_LEFT; }
+
+.TW_LEFT { grid-area: TW_LEFT; }
+
+.DEPOSIT_COST { grid-area: DEPOSIT_COST; }
+
+.NO_KM_LIMIT { grid-area: NO_KM_LIMIT; }
+
+.OTHER { grid-area: OTHER; }
+
+.POSSIBLE_CHARGE_CLIENT {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: "TITLE TITLE TITLE" "ADDITION_DAY_COST ADDITION_DAY_COST ADDITION_DAY_COST" "SUBSTITUTION_PICKUP IN_CITY OUT_CITY" "CDW_RIGHT CDW_RIGHT CDW_RIGHT" "TW_RIGHT TW_RIGHT TW_RIGHT" "FUEL FUEL FUEL" "RENT_RETURN_OUT_HOURS_WORK RENT_RETURN_OUT_HOURS_WORK RENT_RETURN_OUT_HOURS_WORK" "IS_CLEAN IS_CLEAN IS_CLEAN" "CLEANING CLEANING CLEANING" "OTHER_RIGHT OTHER_RIGHT OTHER_RIGHT";
+  grid-area: POSSIBLE_CHARGE_CLIENT;
+}
+
+.TITLE { grid-area: TITLE; }
+.ADDITION_DAY_COST { grid-area: ADDITION_DAY_COST; }
+
+.SUBSTITUTION_PICKUP { grid-area: SUBSTITUTION_PICKUP; }
+
+.IN_CITY { grid-area: IN_CITY; }
+
+.OUT_CITY { grid-area: OUT_CITY; }
+
+.CDW_RIGHT { grid-area: CDW_RIGHT; }
+
+.TW_RIGHT { grid-area: TW_RIGHT; }
+
+.FUEL { grid-area: FUEL; }
+
+.RENT_RETURN_OUT_HOURS_WORK { grid-area: RENT_RETURN_OUT_HOURS_WORK; }
+
+.IS_CLEAN { grid-area: IS_CLEAN; }
+
+.CLEANING { grid-area: CLEANING; }
+
+.OTHER_RIGHT { grid-area: OTHER_RIGHT; }
