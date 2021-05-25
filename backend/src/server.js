@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const session = require('express-session')
 const SQLiteStore = require('connect-sqlite3')(session)
+const path = require('path')
 
 const app = express()
 const mongoose = require('mongoose')
@@ -24,6 +25,8 @@ app.use(session({
 app.use(express.json())
 
 app.use('/api', router)
+app.use('/static', express.static(path.join(__dirname, '/../public/dist/')))
+app.get(/.*/, (req, res) => res.sendFile(path.join(__dirname, '/../public/dist/index.html')))
 
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
