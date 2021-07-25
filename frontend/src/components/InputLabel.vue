@@ -1,13 +1,38 @@
 <template>
   <div class="form">
     <input
-      v-if="isText"
+      v-if="type==0"
       :value="value"
+      spellcheck="false"
       type="text"
+      name="name"
+      autocomplete="new password"
+      minlength="1"
+      :maxlength="maxlength"
+      :required="required"
+      :disabled="!active"
+      @input="$emit('input', $event.target.value)"
+    >
+    <input
+      v-else-if="type==1"
+      :value="value"
+      type="password"
       name="name"
       autocomplete="off"
       :maxlength="maxlength"
-      required
+      :required="required"
+      :disabled="!active"
+      @input="$emit('input', $event.target.value)"
+    >
+    <input
+      v-else-if="type==2"
+      :value="value"
+      type="email"
+      name="name"
+      autocomplete="off"
+      :maxlength="maxlength"
+      :required="required"
+      :disabled="!active"
       @input="$emit('input', $event.target.value)"
     >
     <input
@@ -18,26 +43,31 @@
       autocomplete="off"
       :min="min"
       :max="max"
-      required
+      :required="required"
+      :disabled="!active"
       @input="$emit('input', $event.target.value)"
     >
     <label
       for="name"
       class="label-name"
     >
-      <span class="content-name"> {{ labelText }} </span>
+      <span
+        ref="label"
+        class="content-name"
+      > {{ labelText }} </span>
     </label>
   </div>
 </template>
 <script>
 export default {
   props: {
-    isText: {
-      type: Boolean,
-      default: true
+    /** 0 - text, 1 - password, 2 - email, *-- number */
+    type: {
+      type: Number,
+      default: 0
     },
     value: {
-      type: String,
+      type: [String, Number],
       default: ''
     },
     labelText: {
@@ -55,6 +85,42 @@ export default {
     max: {
       type: Number,
       default: 10000
+    },
+    isActive: {
+      type: Boolean,
+      default: true
+    },
+    required: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data () {
+    return {
+      active: this.isActive,
+      val: this.value
+    }
+  },
+  mounted () {
+    if (!this.active) {
+      this.$refs.label.classList.add('unactive')
+    }
+  },
+  methods: {
+    setActive (active) {
+      if (this.active === active) {
+        return
+      }
+      this.active = active
+      if (this.active) {
+        this.$refs.label.classList.remove('unactive')
+        this.$refs.label.classList.add('unactive-leave')
+        setTimeout(() => { this.$refs.label.classList.remove('unactive-leave') }, 800)
+      } else {
+        this.$refs.label.classList.add('unactive')
+        this.val = ''
+        this.$emit('input', this.val)
+      }
     }
   }
 }
@@ -70,12 +136,11 @@ export default {
   input {
     width: 100%;
     height: 100%;
-    color: #595f6e;
+    background-color: transparent;
+    color: var(--input-text);
     padding-top: 13px;
-    // padding-right: 0;
     border: none;
     outline: none;
-    // padding: 0;
   }
 
   label {
@@ -85,7 +150,7 @@ export default {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--input-border);
   }
 
   label::after {
@@ -95,16 +160,35 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    border-bottom: 3px solid #5fa8d3;
+    border-bottom: 1px solid var(--input-border-active);
     transform: translateX(-100%);
     transition: all 0.3s ease;
   }
 
   .content-name {
     position: absolute;
+    color: var(--input-text);
     bottom: 0;
     left: 2px;
     transition: all 0.3s ease;
+  }
+
+  .unactive::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    border-top: solid 1px var(--input-disable-border);
+    animation: move_border 0.8s linear;
+  }
+
+  .unactive-leave::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    border-top: solid 1px var(--input-disable-border);
+    animation: move_border_r 0.8s linear;
   }
 
   input:focus + .label-name .content-name,
@@ -112,14 +196,17 @@ export default {
   input[type=number]:out-of-range + .label-name .content-name {
     transform: translateY(-170%);
     font-size: 14px;
-    color: #5fa8d3;
+    color: var(--input-text-active);
   }
 
-  /* input:valid + .label-name .content-name {
-    transform: translateY(-150%);
+  input[type=email]:invalid + .label-name .content-name {
+    transform: translateY(-170%);
     font-size: 14px;
-    color: #5fa8d3;
-  } */
+    color: var(--input-border-warning);
+  }
+  input[type=email]:invalid + .label-name {
+    border-bottom: 1px solid var(--input-border-warning);
+  }
 
   input:focus + .label-name::after,
   input:valid + .label-name::after {
@@ -127,11 +214,11 @@ export default {
   }
 
   input[type=number]:out-of-range + .label-name {
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid var(--input-border-warning);
   }
 
   input[type=number]:out-of-range + .label-name::after {
-    border-bottom: 3px solid red;
+    border-bottom: 1px solid var(--input-border-warning);
   }
 }
 </style>

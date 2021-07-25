@@ -12,7 +12,7 @@
   }
 
   .login {
-    background-color: #fff;
+    // background-color: transparent;
     width: 250px;
 
     @media (max-width: 350px) {
@@ -52,7 +52,7 @@
         top: 50%;
         width: 250px;
         height: 1px;
-        background: #adac97;
+        // background: #adac97;
       }
 
       &::before {
@@ -86,7 +86,7 @@
   input[type=text],
   input[type=password],
   input[type=email] {
-    background-color: #efefef;
+    // background-color: #efefef;
     color: #666;
     border: 2px solid #ddd;
     border-radius: 3px;

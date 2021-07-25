@@ -7,6 +7,7 @@ import VueProgressBar from 'vue-progressbar'
 import VueSignature from 'vue-signature-pad'
 
 import VueHtmlToPaper from 'vue-html-to-paper'
+import './registerServiceWorker'
 
 const options = {
   name: '_blank',

@@ -5,17 +5,23 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "start": "vue-cli-service serve"
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve --progress"
   },
   "dependencies": {
     "@livelybone/vue-datepicker": "^4.0.2",
     "axios": "^0.21.1",
+    "file-saver": "^2.0.5",
     "fs": "0.0.1-security",
+    "jszip": "^3.6.0",
     "merge-images": "^2.0.0",
+    "register-service-worker": "^1.7.1",
     "signature_pad": "^3.0.0-beta.3",
+    "swiper": "^6.7.5",
+    "velocity-animate": "^1.5.2",
     "vue": "^2.6.6",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-carousel": "^0.18.0",
     "vue-html-to-paper": "^1.3.1",
     "vue-loader": "^15.9.2",
@@ -27,8 +33,11 @@
     "yarn": "^1.22.4"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
+    "@types/node": "^16.3.2",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-plugin-pwa": "^4.5.13",
     "@vue/cli-plugin-unit-jest": "^4.0.0-alpha.1",
     "@vue/cli-service": "^4.5.4",
     "@vue/test-utils": "1.0.0-beta.29",
@@ -44,6 +53,7 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^7.1.0",
     "stylelint-config-standard": "^18.3.0",
+    "sw-precache-webpack-plugin": "^1.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
@@ -58,12 +68,6 @@
     "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
-    }
-  },
-  "stylelint": {
-    "extends": "stylelint-config-standard",
-    "rules": {
-      "at-rule-no-unknown": null
     }
   },
   "postcss": {
@@ -101,5 +105,11 @@
       "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
     ],
     "testURL": "http://localhost/"
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "at-rule-no-unknown": null
+    }
   }
 }

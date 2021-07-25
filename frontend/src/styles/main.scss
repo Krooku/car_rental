@@ -1,5 +1,7 @@
 :root {
-  --color-bg: #ebe0d4;
+  --color-bg: #0e101b; //hsl(230, 30%, 8%);
+  --color-bg-gradient: linear-gradient(45deg, rgba(127,122,118,1) 9%, rgba(206,204,205,1) 30%, rgba(206,204,205,1) 69%, rgba(127,122,118,1) 94%);
+  --color: rbg(62, 61, 57);
   --color-red: #df1000;
   --color-selago: #f7f7fe;
   --color-light-blue: #ccd9de;
@@ -7,11 +9,34 @@
   --color-dark-red: #a64452;
   --color-light-grey: #e0e0e0;
   --color-dark-grey: #c2c2c2;
+
+  --color-white: #f4f4f4;
+  --color-gray: #f4f4f4;
+  --color-some-blue: #838ab6;
+
+
+
+  // button
+  --button-color: hsl(145, 43%, 43%);
+  --button-hover-color: hsl(9, 53%, 46%);
+  --button-text: hsl(9, 53%, 46%);
+  --button-text-hover: hsl(145, 43%, 43%);
+  --button-border-color: hsl(145, 43%, 43%);
+
+  // component input colors
+  --input-text: hsl(0, 1%, 66%);
+  --input-text-active: hsl(145, 43%, 43%);
+  --input-border: hsl(0, 1%, 66%);
+  --input-border-active: hsl(145, 43%, 43%);
+  --input-border-warning: hsl(0, 87%, 34%);
+  --input-disable-border: hsl(0, 46%, 44%);
+  
 }
 
-@import url("https://fonts.googleapis.com/css?family=Kalam&display=swap&subset=latin-ext");
+
+
+// @import url("https://fonts.googleapis.com/css?family=Kalam&display=swap&subset=latin-ext");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap');
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.1/animate.min.css");
-// @import "./log.scss";
-// @import "./tileList.scss";
 @import "./styles.scss";

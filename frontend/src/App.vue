@@ -1,255 +1,292 @@
 <template>
-  <div>
-    <div class="nav">
-      <div
-        class="show-xs nav-hamburger"
-        @click="mobileMenu = !mobileMenu"
+  <div class="main-container">
+    <div
+      ref="curtain"
+      class="curtain"
+    />
+    <div class="test">
+      <nav
+        v-if="loggedIn"
+        ref="nav"
+        class="nav"
       >
-        <i class="fa fa-bars" />
-      </div>
+        <router-link
+          to="/"
+          class="logo"
+        >
+          <span class="hidden">Route to home page</span>
+          {{ appName }}
+        </router-link>
+        <menu-icon
+          v-if="mobileMenu"
+          ref="m_menu"
+          v-model="isActiveMenu"
+          @clickFunc="addAnimation"
+        />
+      </nav>
+    </div>
+    <nav
+      v-if="isActiveMenu"
+      class="flex_box nav_items"
+    >
       <router-link
         to="/"
-        class="logo"
+        class="item"
       >
-        {{ appName }}
+        <span class="hidden">Route to rental contracts</span>
+        <p
+          :class="{ active: currentRouteName === 'homepage' }"
+          @click="addAnimationFromMenu(currentRouteName === 'homepage')"
+        >
+          Wynajmy
+        </p>
+      </router-link>
+      <router-link
+        to="/insertTowingErrand"
+        class="item"
+      >
+        <span class="hidden">Route to insert errand page</span>
+        <p
+          :class="{ active: currentRouteName === 'insertTowingErrand' }"
+          @click="addAnimationFromMenu(currentRouteName === 'insertTowingErrand')"
+        >
+          Dodaj zlecenie
+        </p>
+      </router-link>
+      <router-link
+        to="/towingErrand"
+        class="item"
+      >
+        <span class="hidden">Route to towing errands</span>
+        <p
+          :class="{ active: currentRouteName === 'towingErrand', inactive: currentRouteName !== 'towingErrand' }"
+          @click="addAnimationFromMenu(currentRouteName === 'towingErrand')"
+        >
+          Zlecenia
+        </p>
+      </router-link>
+      <router-link
+        v-if="getRole === 'admin'"
+        to="/register"
+        class="item"
+      >
+        <span class="hidden">Route to create new account</span>
+        <p
+          :class="{ active: currentRouteName === 'register', inactive: currentRouteName !== 'register' }"
+          @click="addAnimationFromMenu(currentRouteName === 'register')"
+        >
+          Stwórz konto
+        </p>
       </router-link>
       <div
-        v-if="userLoaded"
-        class="nav__items-container hidden-xs"
+        class="item"
+        @click="logout()"
       >
-        <template v-if="loggedIn">
-          <router-link
-            v-if="getRole=='admin'"
-            class="nav__btn"
-            to="/register"
-          >
-            Dodaj pracownika
-          </router-link>
-          <div
-            class="nav__btn"
-            @click="logout"
-          >
-            Wyloguj się
-          </div>
-        </template>
-        <template v-else>
-          <router-link
-            class="nav__btn"
-            to="/login"
-          >
-            Zaloguj się
-          </router-link>
-        </template>
+        <span class="hidden">Log out from site</span>
+        <p @click="addAnimationFromMenu">
+          Wyloguj się
+        </p>
       </div>
-    </div>
-    <div :class="{ 'mobile-nav': true, 'open': mobileMenu }">
-      <div @click="mobileMenu = false">
-        <template v-if="loggedIn">
-          <router-link
-            v-if="getRole==='admin'"
-            class="mobile-nav__btn"
-            to="/register"
-          >
-            Dodaj pracownika
-          </router-link>
-          <div
-            class="mobile-nav__btn"
-            @click="logout"
-          >
-            Wyloguj się
-          </div>
-        </template>
-        <template v-else>
-          <router-link
-            class="mobile-nav__btn"
-            to="/login"
-          >
-            Zaloguj się
-          </router-link>
-        </template>
-      </div>
-    </div>
-    <router-view class="content-view" />
-    <vue-progress-bar />
+    </nav>
+    <router-view
+      ref="view"
+      class="content-view"
+    />
   </div>
 </template>
 
 <script>
 import api from './api'
+import MenuIcon from './components/MenuIcon'
 
 export default {
+  components: { MenuIcon },
   data () {
     return {
-      appName: process.env.VUE_APP_NAME || 'Wypożyczalnia',
-      mobileMenu: false
+      appName: process.env.VUE_APP_NAME || 'TransPol',
+      mobileMenu: true,
+      isActiveMenu: false
     }
   },
   computed: {
     userLoaded () { return this.$store.getters.userLoaded },
     loggedIn () { return this.$store.getters.loggedIn },
     username () { return this.loggedIn && this.$store.getters.username },
-    getRole () { return this.$store.getters.role }
+    getRole () { return this.$store.getters.role },
+    currentRouteName () { return this.$route.name }
+  },
+  mounted () {
+
   },
   methods: {
-    async logout () {
-      const response = await api.logout()
-      if (response.status === 200) {
-        this.$store.dispatch('logout')
-        this.$router.push({ name: 'login' })
-      }
+    addAnimation () {
+      this.$refs.curtain.classList.add('show_animation')
+      setTimeout(() => {
+        this.$refs.curtain.classList.remove('show_animation')
+        this.$refs.curtain.classList.add('hide_animation')
+        if (this.$refs.view.$el.classList.value.search('hidden') === -1) this.$refs.view.$el.classList.add('hidden')
+        if (this.$refs.view.$el.classList.value.search('hidden') !== -1 && !this.isActiveMenu) this.$refs.view.$el.classList.remove('hidden')
+        setTimeout(() => {
+          this.$refs.curtain.classList.remove('hide_animation')
+          this.$refs.m_menu.unblock()
+        }, 500)
+      }, 1000)
+    },
+    addAnimationFromMenu (block) {
+      if (block) return
+      this.isActiveMenu = false
+      this.$refs.m_menu.Block()
+      this.$refs.curtain.classList.add('show_animation')
+      setTimeout(() => {
+        this.$refs.curtain.classList.remove('show_animation')
+        this.$refs.curtain.classList.add('hide_animation')
+        // if (this.$refs.view.$el.classList.value.search('hidden') === -1) this.$refs.view.$el.classList.add('hidden')
+        // if (this.$refs.view.$el.classList.value.search('hidden') !== -1 && !this.isActiveMenu) this.$refs.view.$el.classList.remove('hidden')
+        setTimeout(() => {
+          this.$refs.curtain.classList.remove('hide_animation')
+          this.$refs.m_menu.unblock()
+          this.$refs.m_menu.setClicked(false)
+        }, 500)
+      }, 1000)
+    },
+    logout () {
+      // this.addAnimation()
+      this.$refs.nav.classList.add('hideY_animation')
+      this.isActiveMenu = false
+      setTimeout(async () => {
+        const response = await api.logout()
+        if (response.status === 200) {
+          this.$store.dispatch('logout')
+          this.$router.push({ name: 'login' })
+        }
+      }, 1400)
     }
   }
 }
 </script>
 
 <style lang="scss">
-#signature {
-  border: double 3px transparent;
-  border-radius: 5px;
-  background-image: linear-gradient(white, white), radial-gradient(circle at top left, #4bc5e8, #9f6274);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
+@keyframes hideY {
+  from { transform: translate(-50%, 0%); }
+  to { transform: translate(-50%, -100%); }
+}
+
+@keyframes show {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0%); }
+}
+
+@keyframes hide {
+  from { transform: translateX(0%); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes backgroundAnimation {
+  0% {background-position:0% 65%}
+  50% {background-position:100% 36%}
+  100% {background-position:0% 65%}
+}
+
+.hideY_animation {
+    animation-name: hideY;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(.59,.7,.82,.4);
+    animation-fill-mode: forwards;
+}
+
+.show_animation {
+    animation-name: show;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(.59,.7,.82,.4);
+    animation-fill-mode: forwards;
+}
+
+.hide_animation {
+    animation-name: hide;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(.59,.7,.82,.4);
+    animation-fill-mode: forwards;
 }
 
 body {
   margin: 0;
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: var(--color-bg);
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-a {
-  text-decoration: none;
-}
-
-.logo {
-  line-height: 3rem;
-  display: inline-flex;
-  font-weight: bold;
-  font-size: 18px;
-  color: black;
-  text-transform: uppercase;
-  padding: 0 10px;
-
-  img {
-    object-fit: contain;
-  }
-}
-
-.content-view {
-  margin-top: 3rem !important;
-  overflow: auto;
-  min-height: calc(100vh - 3rem);
-}
-
-.show-xs {
-  display: none;
-}
-
-@media (max-width: 500px) {
-  .hidden-xs {
-    display: none !important;
-  }
-
-  .show-xs {
-    display: flex;
-  }
-}
-
-.nav {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  position: fixed;
-  top: 0;
-  height: 3rem;
+  font-family: Roboto;
+  // background: rgb(26,21,36);
+  background: rgb(91, 15, 243);
+  background: linear-gradient(142deg, rgba(26,21,36,1) 0%, rgb(78, 59, 124) 20%, rgb(36, 31, 49) 40%, rgba(18,20,31,1) 67%, rgba(14,16,27,1) 80%);
   width: 100%;
-  white-space: nowrap;
-  border-bottom: 1px solid lightgrey;
-  background-color: var(--color-selago);
-  z-index: 100;
-
-  &__items-container {
-    display: flex;
-    align-items: stretch;
-    margin-left: auto;
-    padding: 0 10px;
-  }
-
-  &-hamburger {
-    font-size: 32px;
-    align-items: center;
-    padding: 0 4px;
-    margin-left: 6px;
-  }
-
-  &__btn {
-    display: flex;
-    font-size: 0.875rem;
-    align-items: center;
-    padding: 0 5px;
-    color: #2c3e50;
-    border-bottom: 3px solid transparent;
-    box-sizing: border-box;
-    white-space: nowrap;
-    transition: all 0.1s ease;
-    cursor: pointer;
-
-    &.router-link-exact-active {
-      border-bottom-color: #d24b5e;
-    }
-  }
-
-  &__btn:hover {
-    color: black;
-    border-bottom-color: #a64452;
-  }
+  height: 100%;
+  background-size: 200% 200%;
+  animation: backgroundAnimation 15s ease infinite;
 }
 
-.mobile-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 250px;
-  background: #f7f7fe;
-  margin-top: 3rem;
-  height: calc(100% - 3rem);
-  z-index: 90;
-  border-right: 1px solid lightgrey;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-100%);
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+a, router-link {
+  text-decoration: none;
+  color: var(--color-white);
+}
 
-  @media (max-width: 500px) {
-    &.open {
-      transform: none;
+.main-container {
+  position: relative;
+  min-height: 100vh;
+  max-height: 100%;
+  .curtain {
+    z-index: 1;
+    position: absolute;
+    background: var(--color-bg);
+    width: 100%;
+    height: 100vh;
+    transform: translateX(-100%);
+  }
+  .test {
+    // position: relative;
+    height: 60px;
+    // padding: 20px;
+    nav {
+      box-sizing: border-box;
+      z-index: 2;
+      width: 100%;
+      position: absolute;
+      display: flex;
+      left: 50%;
+      transform: translate(-50%, 0);
+      max-width: 1600px;
+      padding: 20px;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--color-white);
+
+      .logo {
+        justify-self: flex-start;
+        // color: var(--color-white)
+      }
     }
   }
+  .nav_items {
+    flex-direction: column;
+    padding: 20vh 0 0 20vw;
+    gap: 15px;
+    font-size: 24px;
+    height: 100%;
+    .item {
+      color: var(--color-some-blue);
+      align-self: flex-start;
 
-  &__btn {
-    display: flex;
-    font-size: 0.875rem;
-    align-items: center;
-    padding: 15px 5px;
-    color: #2c3e50;
-    border-left: 3px solid transparent;
-    box-sizing: border-box;
-    white-space: nowrap;
-    transition: all 0.1s ease;
-    cursor: pointer;
+      &:hover {
+        color: var(--color-white);
+        cursor: pointer;
+      }
 
-    &.router-link-exact-active {
-      border-left-color: #d24b5e;
-      background-color: lightgray;
+      p {
+        padding: 0;
+        margin: 0;
+      }
+      .active {
+        cursor: default;
+        color: var(--color-white)
+      }
     }
-  }
-
-  &__btn:hover {
-    color: black;
-    border-left-color: #a64452;
   }
 }
 </style>
