@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { hashPassword } = require('../services/crypto')
+const { hashPassword, generetePassword } = require('../services/crypto')
 const mailer = require('../services/mailer')
 
 const UserSchema = mongoose.Schema({
@@ -29,7 +29,7 @@ const UserSchema = mongoose.Schema({
 
 UserSchema.pre('save', async function (next) {
   // if (!this.isModified('password')) return next()
-  this.password = 'testowe'
+  this.password = generetePassword()
   mailer.sendPasswordEmail(this.username, this.password, this.email)
   const hashed = await hashPassword(this.password)
   this.password = hashed
