@@ -16,22 +16,24 @@
       />
       <div>
         <p>Typ konta</p>
+
         <input
           id="member"
-          v-model="user.role"
+          v-model="test"
           type="radio"
           value="member"
         >
         <label for="member">Zwykłe</label>
-        <br>
+
         <input
-          id="two"
-          v-model="user.role"
+          id="admin"
+          v-model="test"
           type="radio"
           value="admin"
         >
-        <label for="two">Administrator</label>
+        <label for="admin">Administrator</label>
       </div>
+      {{ test }}
       <p
         v-if="message.text"
         :class="message.style"
@@ -59,11 +61,12 @@ export default {
   },
   data () {
     return {
+      test: 'member',
       user: {},
       emptyUser: {
         username: '',
         email: '',
-        role: ''
+        role: 'member'
       },
       message: {
         style: null,
@@ -83,6 +86,7 @@ export default {
       this.message.text = message
     },
     async handleRegister () {
+      this.user.type = this.test
       const response = await api.register(this.user)
 
       if (response.status !== 200) {
