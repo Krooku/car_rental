@@ -1,6 +1,24 @@
 <template>
   <div>
     HOME PAGE
+    <form id="form">
+      <input
+        id="from"
+        placeholder="From"
+        value="Brussel"
+      >
+      <input
+        id="to"
+        placeholder="To"
+        value="Antwerpen"
+      >
+      <input
+        type="submit"
+        value="GO"
+      >
+    </form>
+
+    <div id="map" />
   </div>
 </template>
 
@@ -39,6 +57,9 @@ export default {
 </script>
 
 <style lang="scss">
+        #map {
+            height: 90%;
+        }
 .radio_box {
   width: 100%;
   justify-content: center;

@@ -34,17 +34,6 @@ const RentSchema = mongoose.Schema({
     days: {
         type: Number,
         required: true
-    },
-    status: {
-        type: String,
-        enum: ['Anulowanie', 'W trakcie', 'Zakończone'],
-        default: 'W trakcie'
-    },
-    planningReturnPlace: {
-        type: String
-    },
-    phoneNumber: {
-        type: Number
     }
 }, {
     timestamps: true
