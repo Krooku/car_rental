@@ -12,7 +12,7 @@ const job = schedule.scheduleJob('00 * * * *', async () => { // every hour
           $gte: startToday,
           $lt: endToday
       },
-      rentId!: null
+      rentId: null
   }
   await Car.find(filter).then(cars => {
     cars.forEach(car => {

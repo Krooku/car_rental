@@ -82,7 +82,7 @@
           <span
             v-for="item in filtered"
             :key="item._id"
-            class="list-complete-item"
+            class="list-complete-item border"
           >
             <router-link
               :to="{ name: 'errand', params: { towingErrandId: item._id}}"
@@ -98,9 +98,10 @@
           <span
             v-for="item in filtered"
             :key="item._id"
-            class="list-complete-item"
+            class="list-complete-item border"
           >
-            {{ item.userId.username }}
+            <span v-if="item.userId !== null"> {{ item.userId.username }} </span>
+            <span v-else> null </span>
           </span>
         </transition-group>
         <transition-group
@@ -110,7 +111,7 @@
           <span
             v-for="item in filtered"
             :key="item._id"
-            class="list-complete-item"
+            class="list-complete-item border"
           >
             {{ item.status }}
           </span>
@@ -241,7 +242,7 @@ export default {
       return next({ name: 'insertTowingErrand' })
     }
     next(vm => {
-      // console.log(response.data)
+      console.log(response.data)
       vm.errands = response.data
       vm.filtered = response.data
       // vm.fillFields()
@@ -336,6 +337,10 @@ export default {
         white-space: nowrap;
       color: white;
       // background-color: violet;
+      .border {
+        border: solid black 1px;
+        padding: 4px;
+      }
 
       .row {
         display: grid;
@@ -371,6 +376,7 @@ export default {
 }
 .list-complete-leave-active {
   position: absolute;
+  width: 100%;
   div {
     // position: absolute;
   }

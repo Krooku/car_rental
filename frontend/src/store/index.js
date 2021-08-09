@@ -29,6 +29,7 @@ export default new Vuex.Store({
     userLoaded: state => state.userLoaded,
     loggedIn: state => !!(state.user && state.user.id),
     username: state => state.user && state.user.username,
-    role: state => state.user && state.user.role
+    role: state => state.user && state.user.role,
+    isAdmin: state => state.user && state.user.role === 'admin'
   }
 })

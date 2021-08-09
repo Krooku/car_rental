@@ -60,6 +60,12 @@ const router = new Router({
       name: 'errand',
       meta: { loginNotRequired: false, blockIfLoggedIn: false },
       component: () => import(/* webpackChunkName: "errand" */ './views/Errand.vue')
+    },
+    {
+      path: '/adminPanel',
+      name: 'adminPanel',
+      meta: { loginNotRequired: false, blockIfLoggedIn: false, adminAccountRequired: true },
+      component: () => import(/* webpackChunkName: "adminPanel" */ './views/AdminPanel.vue')
     }
   ]
 })
@@ -79,8 +85,11 @@ router.beforeEach(async (to, from, next) => {
       return next('/login')
     })
   }
-
-  if (!store.getters.loggedIn) {
+  if (!store.getters.isAdmin) {
+    if (to.matched.some(record => record.meta.adminAccountRequired)) {
+      return next('/')
+    }
+  } else if (!store.getters.loggedIn) {
     if (to.matched.some(record => record.meta.loginNotRequired)) {
       return next()
     }

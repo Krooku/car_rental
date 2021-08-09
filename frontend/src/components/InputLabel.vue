@@ -199,14 +199,14 @@ export default {
     color: var(--input-text-active);
   }
 
-  input[type=email]:invalid + .label-name .content-name {
+  /*input[type=email]:invalid + .label-name .content-name {
     transform: translateY(-170%);
     font-size: 14px;
     color: var(--input-border-warning);
   }
   input[type=email]:invalid + .label-name {
     border-bottom: 1px solid var(--input-border-warning);
-  }
+  }*/
 
   input:focus + .label-name::after,
   input:valid + .label-name::after {

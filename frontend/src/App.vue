@@ -67,15 +67,15 @@
       </router-link>
       <router-link
         v-if="getRole === 'admin'"
-        to="/register"
+        to="/adminPanel"
         class="item"
       >
-        <span class="hidden">Route to create new account</span>
+        <span class="hidden">Route to admin panel</span>
         <p
-          :class="{ active: currentRouteName === 'register', inactive: currentRouteName !== 'register' }"
-          @click="addAnimationFromMenu(currentRouteName === 'register')"
+          :class="{ active: currentRouteName === 'adminPanel', inactive: currentRouteName !== 'adminPanel' }"
+          @click="addAnimationFromMenu(currentRouteName === 'adminPanel')"
         >
-          Stwórz konto
+          Panel Administracyjny
         </p>
       </router-link>
       <div
