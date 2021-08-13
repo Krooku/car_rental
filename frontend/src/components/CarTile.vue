@@ -1,9 +1,15 @@
 <template>
   <div class="tile">
-    <p> {{ car.number }} </p>
+    <p> {{ car.registrationNumber }} </p>
     <p> {{ car.model }} {{ car.brand }}</p>
+    <router-link
+      :to="{ name: 'rent', params: { carId: car._id}}"
+    >
+      Wypożycz
+    </router-link>
   </div>
 </template>
+
 <script>
 export default {
   props: {

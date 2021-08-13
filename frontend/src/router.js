@@ -66,6 +66,18 @@ const router = new Router({
       name: 'adminPanel',
       meta: { loginNotRequired: false, blockIfLoggedIn: false, adminAccountRequired: true },
       component: () => import(/* webpackChunkName: "adminPanel" */ './views/AdminPanel.vue')
+    },
+    {
+      path: '/rental',
+      name: 'rental',
+      meta: { loginNotRequired: false, blockIfLoggedIn: false, adminAccountRequired: false },
+      component: () => import(/* webpackChunkName: "rental" */ './views/Rental.vue')
+    },
+    {
+      path: '/rent/:carId',
+      name: 'rent',
+      meta: { loginNotRequired: false, blockIfLoggedIn: false, adminAccountRequired: false },
+      component: () => import(/* webpackChunkName: "rent" */ './views/Rent.vue')
     }
   ]
 })

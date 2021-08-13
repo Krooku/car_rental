@@ -239,6 +239,29 @@ export default {
    */
   getErrand (towingErrandId) {
     return this.execute('GET', `/towingErrand/${towingErrandId}`)
+  },
+
+  /**
+   * Creates new rent
+   * @param {object} data
+   * @param {string} data.carId
+   * @param {string} data.name
+   * @param {string} data.startDate
+   * @param {string} data.endDate
+   * @param {number} data.days
+   * @param {string} data.planningReturnPlace
+   * @param {string} data.phoneNumber
+   */
+  createRent (data) {
+    return this.execute('POST', `/rent`, {
+      carId: data.carId,
+      name: data.name,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      days: data.days,
+      planningReturnPlace: data.planningReturnPlace,
+      phoneNumber: data.phoneNumber
+    })
   }
 
 }

@@ -30,15 +30,15 @@
       class="flex_box nav_items"
     >
       <router-link
-        to="/"
+        to="/rental"
         class="item"
       >
-        <span class="hidden">Route to rental contracts</span>
+        <span class="hidden">Route to rental</span>
         <p
-          :class="{ active: currentRouteName === 'homepage' }"
-          @click="addAnimationFromMenu(currentRouteName === 'homepage')"
+          :class="{ active: currentRouteName === 'rental' }"
+          @click="addAnimationFromMenu(currentRouteName === 'rental')"
         >
-          Wynajmy
+          Wypożyczalnia
         </p>
       </router-link>
       <router-link
